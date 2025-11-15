@@ -60,7 +60,7 @@ Essa visão fornece uma perspectiva macro da solução distribuída e modular, p
 ````mermaid
 ---
 config:
-      theme: base
+      theme: dark
 ---
 flowchart LR
     subgraph Frontend [Angular Frontend]
@@ -109,7 +109,7 @@ Serve como referência para implementação, _debugging_ e otimização de perfo
 ````mermaid
 ---
 config:
-      theme: base
+      theme: dark
 ---
 sequenceDiagram
       participant U as Usuário (Angular)
@@ -152,7 +152,7 @@ Essa visão reflete uma arquitetura simplificada, porém robusta, garantindo esc
 ```mermaid
 ---
 config:
-      theme: base
+      theme: dark
 ---
 flowchart LR
 User[Usuários]
