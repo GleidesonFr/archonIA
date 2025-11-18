@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "ai.service.url",
+  "type": "java.lang.String",
+  "description": "URL of the AI service endpoint"
+}]}

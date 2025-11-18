@@ -1,0 +1,15 @@
+# Environment variables
+.env
+
+# IDE directories
+.idea/
+.vscode/
+
+# Maven wrapper files
+.mvn/
+
+# venv directories
+venv/
+
+#Python cache files
+__pycache__/

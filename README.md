@@ -1,4 +1,6 @@
-# Archon IA
+<img src="/docs/img/archonia-logo.png" width="200">
+
+# ArchonIA
 
 ## Visão Geral
 
@@ -185,7 +187,40 @@ FAST --> LANG
 
 ## Endpoints & Protocolos
 
-[Em andamento...]
+### Spring Boot Back-End
+
+* Criar sessão
+```bash
+http://localhost:8081/session
+```
+
+* Retornar, deletar e atualizar sessão
+```bash
+http://locahost:8081/session/{sessionId}
+```
+
+* Enviar pergunta para a IA
+```bash
+http://localhost:8081/api/v1/chat
+```
+
+* Verificar a saúde da IA
+```bash
+http://localhost:8081/api/v1/chat/health
+```
+
+## Microsserviço FastAPI (LLM)
+
+* Enviar resposta para o usuário
+```bash
+http://localhost:8000/ai
+```
+
+## Armazenamento de sessão em cache (Redis)
+
+```bash
+http://localhost:6379
+```
 
 ## Gerenciamento de Sessões (Redis)
 
@@ -227,6 +262,36 @@ FAST --> LANG
 
 ```bash
 |- backend/
+    |- archonia/
+        |- src/
+            |- main/
+                |- java/
+                    |- com/
+                        |- backend/
+                            |- archonia/
+                                |- controllers/
+                                    |- ChatController.java
+                                    |- SessionController.java
+                                |- core/
+                                    |- clients/
+                                        |- AiClient.java
+                                    |- dto/
+                                        |- AiRequest.java
+                                        |- AiResponse.java
+                                    |- services/
+                                        |- AiService.java
+                                        |- SessionService.java
+                                |- models/
+                                    |- ChatMessage.java
+                                    |- ChatRequest.java
+                                    |- ChatResponse.java
+                                    |- UserSession.java
+                                |- ArchoniaApplication.java
+                            |- resources/
+                                |- META-INF/
+                                    |- additional-spring-configuration-metadata.json
+                                |- application.yaml
+                        |- pom.xml
 |- bot/
 |- docs/
 |- frontend/

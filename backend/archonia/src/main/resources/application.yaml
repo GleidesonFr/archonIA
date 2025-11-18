@@ -1,0 +1,15 @@
+server:
+    port: 8081
+
+spring:
+    application:
+        name: archonia # backend rodará na porta 8081
+
+logging:
+    level:
+        root: INFO
+        "[com.backend.archonia]": DEBUG
+
+ai:
+  service:
+    url: "http://localhost:8000/ai"
