@@ -25,7 +25,7 @@ public class AiService {
     public AiResponse handleUserMessage(String sessionId, String userMessage, String systemPrompt){
         UserSession session = sessionService.getSession(sessionId);
         if (session == null) {
-            throw new IllegalArgumentException("Session not found: " + sessionId);
+            session = sessionService.createSession();
         }
         
         ChatMessage userChatMessage = new ChatMessage("user", userMessage);

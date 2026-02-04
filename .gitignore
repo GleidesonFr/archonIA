@@ -9,7 +9,7 @@
 .mvn/
 
 # venv directories
-venv/
+.venv/
 
 #Python cache files
 __pycache__/
