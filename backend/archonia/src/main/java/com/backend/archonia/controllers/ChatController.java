@@ -10,7 +10,6 @@ import com.backend.archonia.models.ChatResponse;
 
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/chat")
-@CrossOrigin(origins = "*")
 public class ChatController {
     
     private final AiService aiService;
@@ -30,9 +28,9 @@ public class ChatController {
     @PostMapping("/send")
     public ChatResponse handleMessage(@Valid @RequestBody ChatRequest request) {
         
-        AiResponse aiResponse = aiService.handleUserMessage(request.getSessionId(), request.getMessage(), request.getSystemPrompt());
+        AiResponse aiResponse = aiService.handleUserMessage(request.getSessionId(), request.getMessage(), request.getSystemPrompt(), request.getUserId());
         
-        return new ChatResponse(request.getSessionId(), aiResponse.getReply());
+        return new ChatResponse(aiResponse.getSessionId(), aiResponse.getReply());
     }
 
     @GetMapping("/health")

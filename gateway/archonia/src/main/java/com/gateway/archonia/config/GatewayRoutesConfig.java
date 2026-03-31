@@ -5,6 +5,7 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 public class GatewayRoutesConfig {
@@ -23,7 +24,17 @@ public class GatewayRoutesConfig {
 
         return builder.routes()
         .route("session-backend", r -> r.path("/api/v1/chat/**")
-        .filters(f -> f.stripPrefix(2).filter(cacheRequestBodyFilter.apply(cacheConfig)))
+        .filters(f -> f
+            .stripPrefix(2)
+            .filter((exchange, chain) -> {
+                if (exchange.getRequest().getMethod() == HttpMethod.OPTIONS) {
+                    return chain.filter(exchange);
+                }
+                return cacheRequestBodyFilter
+                    .apply(cacheConfig)
+                    .filter(exchange, chain);
+            })
+        )
         .uri("http://localhost:8081"))
         .route("swagger-backend", r -> r.path("/swagger-ui.html","/swagger-ui/**","/v3/api-docs","/v3/api-docs/**").uri("http://localhost:8081"))
         .route("archon-health", r -> r.path("/health").uri("http://localhost:8081"))

@@ -14,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserSession {
     private String sessionId;
+    private String userId;
     private List<ChatMessage> history = new ArrayList<>();
 
     public void addMessage(ChatMessage message){

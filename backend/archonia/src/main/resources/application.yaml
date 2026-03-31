@@ -13,3 +13,7 @@ logging:
 ai:
   service:
     url: "http://localhost:8000/ai"
+
+archon:
+    session:
+        ttl-hours: 6

@@ -24,7 +24,7 @@ async def process_ai(request: AIRequest):
     
     llm = llm_service.get_llm()
     reply = llm.invoke(history).content
-    return AIResponse(reply=reply)
+    return AIResponse(sessionId=request.sessionId, reply=reply)
 
 @app.get("/health")
 def health_check():

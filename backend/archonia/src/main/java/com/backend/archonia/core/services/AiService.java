@@ -1,7 +1,9 @@
 package com.backend.archonia.core.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import com.backend.archonia.models.UserSession;
 @Service
 public class AiService {
     
+    private static final int MAX_HISTORY = 20;
     private final SessionService sessionService;
     private final AiClient aiClient;
 
@@ -22,21 +25,23 @@ public class AiService {
         this.aiClient = aiClient;
     }
 
-    public AiResponse handleUserMessage(String sessionId, String userMessage, String systemPrompt){
-        UserSession session = sessionService.getSession(sessionId);
-        if (session == null) {
-            session = sessionService.createSession();
+    public AiResponse handleUserMessage(String sessionId, String userMessage, String systemPrompt, String userId){
+        if(sessionId == null || sessionId.isBlank()){
+            sessionId = UUID.randomUUID().toString();
         }
+        UserSession session = sessionService.getSession(sessionId, userId);
         
         ChatMessage userChatMessage = new ChatMessage("user", userMessage);
         session.addMessage(userChatMessage);
 
-        List<Map<String, String>> history = session.getHistory().stream()
+        List<ChatMessage> limitedHistory = applyHistoryLimit(session.getHistory());
+
+        List<Map<String, String>> history = limitedHistory.stream()
             .map(msg -> Map.of("role", msg.getRole(), "content", msg.getContent()))
             .toList();
 
         AiRequest request = new AiRequest();
-        request.setSessionId(sessionId);
+        request.setSessionId(session.getSessionId());
         request.setMessage(userMessage);
         request.setSystemPrompt(systemPrompt);
         request.setHistory(history);
@@ -48,5 +53,15 @@ public class AiService {
         sessionService.updateSession(session);
 
         return response;
+    }
+
+    private List<ChatMessage> applyHistoryLimit(List<ChatMessage> history) {
+        if (history.size() <= MAX_HISTORY) {
+            return history;
+        }
+
+        return new ArrayList<>(
+            history.subList(history.size() - MAX_HISTORY, history.size())
+        );
     }
 }

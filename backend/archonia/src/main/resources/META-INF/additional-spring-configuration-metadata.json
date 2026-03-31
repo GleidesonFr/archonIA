@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "ai.service.url",
-  "type": "java.lang.String",
-  "description": "URL of the AI service endpoint"
-}]}
+{"properties": [
+  {
+    "name": "ai.service.url",
+    "type": "java.lang.String",
+    "description": "URL of the AI service endpoint"
+  },
+  {
+    "name": "archon.session.ttl-hours",
+    "type": "java.lang.String",
+    "description": "A description for 'archon.session.ttl-hours'"
+  }
+]}

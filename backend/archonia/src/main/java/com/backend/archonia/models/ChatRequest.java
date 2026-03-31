@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class ChatRequest {
     
-    @NotBlank(message = "sessionId is mandatory")
     private String sessionId;
 
     @NotBlank(message = "message is mandatory")
@@ -14,4 +13,6 @@ public class ChatRequest {
 
     @NotBlank(message = "message is mandatory")
     private String systemPrompt;
+
+    private String userId;
 }
